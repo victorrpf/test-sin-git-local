@@ -26,6 +26,7 @@
         <li>Cuando haces un commit local desde VS Code, el committer eres tú, con el nombre y el correo que configuraste con <code>git config</code>.</li>
         <li>Cuando subes o editas un archivo directamente en github.com, GitHub crea el commit por ti. En ese caso el committer no eres tú: es <strong>GitHub (web-flow)</strong>, y GitHub firma ese commit con su propia clave criptográfica.</li>
         <li>Los commits creados por Copilot desde github.com son una excepción: se guardan con el nombre de perfil y el correo de tu cuenta de GitHub como autor y como committer, sin firma. Por eso, en la lista de commits se parecen a uno local.</li>
+        <li>Usar Copilot dentro de VS Code no cambia nada: el commit lo hace Git en tu equipo con tu <code>git config</code>, así que es un commit local normal. Lo que se evalúa no es si usas inteligencia artificial, sino desde dónde haces el commit.</li>
       </ul>
       <p>Esa diferencia queda registrada de forma permanente en el historial del repositorio, y es lo que permite distinguir un tipo de commit del otro.</p>
     </section>
@@ -40,7 +41,7 @@
         <li><strong>La indicación de autoría.</strong> En la lista de commits de GitHub, un commit hecho a mano en la web aparece como «usuario authored», porque el committer es GitHub, mientras que uno local aparece como «usuario committed».</li>
         <li><strong>El archivo <code>.patch</code>.</strong> Si añades <code>.patch</code> al final de la URL de un commit, la línea «From:» muestra el nombre y el correo guardados: en un commit local son los de <code>git config</code>, y en uno hecho en la web, a mano o con Copilot, son el nombre de perfil y el correo de la cuenta de GitHub. La interfaz de GitHub siempre muestra el nombre de usuario de la cuenta, así que hace falta el <code>.patch</code> para ver la diferencia.</li>
       </ol>
-      <p><strong>Importante:</strong> un commit hecho desde tu editor también puede aparecer como «Verified» si has configurado tu propia firma GPG o SSH. La diferencia es que, en ese caso, el committer sigues siendo tú, no GitHub. Por eso conviene mirar siempre quién es el committer, no solo si aparece la etiqueta verde.</p>
+      <p><strong>Importante:</strong> un commit hecho desde tu editor también puede aparecer como «Verified» si has configurado tu propia firma GPG o SSH. La diferencia es que, en ese caso, el committer sigues siendo tú, no GitHub. Por eso fíjate en si en la lista aparece «authored» o «committed» y en el aviso que sale al pulsar la etiqueta «Verified», que en un commit web dice que se creó en GitHub.com.</p>
       <p>Además de mirar el historial en GitHub, puedes comprobarlo en tu propio equipo: abre el panel <strong>Source Control</strong> de VS Code. Si la carpeta del proyecto no aparece como un repositorio de Git, o si el <strong>Graph</strong> no muestra esos commits que buscas, es que ese trabajo no se hizo con Git en ese equipo.</p>
       <p>Ojo: lo contrario no sirve como prueba de que sí se usó Git. Si en algún momento clonas el repositorio o haces un <code>pull</code>, los commits que se hicieron desde la web también aparecerán en tu Graph local, porque pasan a formar parte del historial compartido. Que aparezcan ahí no significa que se hayan creado desde el editor.</p>
     </section>
@@ -74,9 +75,9 @@
 
     <section id="compruebalo">
       <h2>7. Compruébalo tú mismo</h2>
-      <p>Puedes comparar tres tipos de commit en el historial real de este mismo repositorio: hechos a mano en la web, hechos con Copilot desde github.com y hechos en local desde VS Code.</p>
+      <p>Puedes comparar cuatro tipos de commit en el historial real de este mismo repositorio: hechos a mano en la web, hechos con Copilot desde github.com, hechos en local desde VS Code y hechos con Copilot dentro de VS Code.</p>
       <p><a href="https://github.com/victorrpf/test-sin-git-local/commits/main">Historial de commits de este repositorio</a></p>
-      <p>Fíjate en el mensaje de cada commit, en si aparece la etiqueta «Verified» y, sobre todo, en quién figura como committer al pulsar sobre cada uno. Comparar los tres tipos es la mejor forma de aprender a distinguirlos.</p>
+      <p>Fíjate en el mensaje de cada commit, en si aparece la etiqueta «Verified» y, sobre todo, en si aparece authored o committed y qué muestra la línea «From:» de su <code>.patch</code>. Comparar los cuatro tipos es la mejor forma de aprender a distinguirlos.</p>
     </section>
   </main>
 
