@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commit local vs. commit en la web: por qué importa cómo subes tus archivos a GitHub</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>¿Commit desde el editor o desde la web?</h1>
+    <p class="subtitle">Una guía sencilla para entender por qué no es lo mismo subir archivos a GitHub arrastrándolos que trabajar con Git desde VS Code.</p>
+  </header>
+
+  <main>
+    <section id="objetivo">
+      <h2>1. Para qué sirve trabajar con Git desde el editor</h2>
+      <p>Cuando una tarea pide usar Git desde el editor, el objetivo no es simplemente «que los archivos aparezcan en GitHub». El objetivo es que practiques el flujo de trabajo que se usa de verdad en un entorno profesional: crear el repositorio, ir haciendo commits de tus cambios, publicarlos y mantener sincronizada tu copia local con la del servidor.</p>
+      <p>Ese flujo —crear, modificar, hacer commit, hacer push, hacer pull— es una habilidad en sí misma, independiente del resultado final. Por eso, aunque subir archivos desde la web produzca un repositorio con el mismo aspecto, no demuestra que hayas practicado ese flujo.</p>
+    </section>
+
+    <section id="diferencia">
+      <h2>2. La diferencia entre un commit local y uno hecho en la web</h2>
+      <p>Todo commit de Git guarda dos datos de identidad: el <strong>autor</strong> (quién escribió el cambio) y el <strong>committer</strong> (quién lo registró en el historial). En la mayoría de los casos ambos coinciden, pero no siempre.</p>
+      <ul>
+        <li>Cuando haces un commit local desde VS Code, el committer eres tú, con el nombre y el correo que configuraste con <code>git config</code>.</li>
+        <li>Cuando subes o editas un archivo directamente en github.com, GitHub crea el commit por ti. En ese caso el committer no eres tú: es <strong>GitHub (web-flow)</strong>, y GitHub firma ese commit con su propia clave criptográfica.</li>
+      </ul>
+      <p>Esa diferencia queda registrada de forma permanente en el historial del repositorio, y es lo que permite distinguir un tipo de commit del otro.</p>
+    </section>
+
+    <section id="deteccion">
+      <h2>3. Cómo se detecta, paso a paso</h2>
+      <p>No hace falta ser un experto para comprobarlo. Estas son las señales, en orden:</p>
+      <ol>
+        <li><strong>El mensaje del commit.</strong> Si subiste un archivo arrastrándolo con «Add file → Upload files», GitHub genera automáticamente el mensaje <em>«Add files via upload»</em>, a menos que lo cambies a mano.</li>
+        <li><strong>La etiqueta «Verified».</strong> En la lista de commits, los hechos en la web suelen mostrar una etiqueta verde «Verified».</li>
+        <li><strong>El aviso al pulsar sobre esa etiqueta.</strong> Si haces clic encima, aparece el mensaje <em>«This commit was created on GitHub.com»</em>, que confirma que el commit se generó desde el navegador.</li>
+      </ol>
+      <p><strong>Importante:</strong> un commit hecho desde tu editor también puede aparecer como «Verified» si has configurado tu propia firma GPG o SSH. La diferencia es que, en ese caso, el committer sigues siendo tú, no GitHub. Por eso conviene mirar siempre quién es el committer, no solo si aparece la etiqueta verde.</p>
+      <p>Además de mirar el historial en GitHub, puedes comprobarlo en tu propio equipo: abre el panel <strong>Source Control</strong> de VS Code. Si la carpeta del proyecto no aparece como un repositorio de Git, o si el <strong>Graph</strong> no muestra esos commits que buscas, es que ese trabajo no se hizo con Git en ese equipo.</p>
+      <p>Ojo: lo contrario no sirve como prueba de que sí se usó Git. Si en algún momento clonas el repositorio o haces un <code>pull</code>, los commits que se hicieron desde la web también aparecerán en tu Graph local, porque pasan a formar parte del historial compartido. Que aparezcan ahí no significa que se hayan creado desde el editor.</p>
+    </section>
+
+    <section id="que-se-pierde">
+      <h2>4. Qué se pierde al subir archivos desde la web</h2>
+      <p>Más allá de que se detecte, trabajar solo desde la web tiene un coste real en el aprendizaje:</p>
+      <ul>
+        <li>No practicas el ciclo básico de Git: <code>stage</code>, <code>commit</code>, <code>push</code> y <code>pull</code>.</li>
+        <li>No revisas los cambios antes de confirmarlos, algo fundamental para detectar errores antes de que queden en el historial.</li>
+        <li>No puedes trabajar sin conexión, algo habitual cuando se usa un editor local.</li>
+        <li>Corres el riesgo de que tu copia local del proyecto y la del repositorio remoto se desincronicen, lo que obliga después a fusionar cambios (y a entender cómo resolver un conflicto), una situación que conviene aprender a manejar de forma controlada.</li>
+      </ul>
+    </section>
+
+    <section id="nota">
+      <h2>5. Por qué afecta a la evaluación</h2>
+      <p>Cuando una tarea pide trabajar con Git desde el editor, no basta con que el resultado final —los archivos en GitHub— tenga buen aspecto. El profesorado puede revisar el historial de commits y ver, con los indicios anteriores, cómo se hizo cada uno. Si los commits muestran que fueron creados en github.com, no se cumple el requisito de haber trabajado con Git desde el editor, aunque el contenido final sea correcto.</p>
+    </section>
+
+    <section id="como-hacerlo-bien">
+      <h2>6. Cómo hacerlo bien</h2>
+      <ol>
+        <li>Clona el repositorio en tu equipo usando VS Code (<em>Clonar repositorio de Git</em>).</li>
+        <li>Haz los cambios que necesites en los archivos, con tu editor.</li>
+        <li>Desde el panel <strong>Source Control</strong>, revisa los cambios, escribe un mensaje descriptivo y haz <strong>commit</strong>.</li>
+        <li>Pulsa <strong>Sync Changes</strong> para publicar tu commit y mantener sincronizada tu copia local con la remota.</li>
+        <li>Comprueba después en el historial de GitHub que tu commit no lleva la etiqueta de GitHub como committer: debe aparecer tu nombre, no «GitHub (web-flow)».</li>
+      </ol>
+    </section>
+
+    <section id="compruebalo">
+      <h2>7. Compruébalo tú mismo</h2>
+      <p>Puedes ver ambos tipos de commit, uno junto al otro, en el historial real de este mismo repositorio:</p>
+      <p><a href="https://github.com/victorrpf/test-sin-git-local/commits/main">Historial de commits de este repositorio</a></p>
+      <p>Fíjate en el mensaje de cada commit, en si aparece la etiqueta «Verified» y, sobre todo, en quién figura como committer al pulsar sobre cada uno. Comparar los dos tipos es la mejor forma de aprender a distinguirlos.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Guía pensada para acompañar el aprendizaje de Git y GitHub. Practica el flujo completo: clonar, cambiar, hacer commit, publicar y sincronizar.</p>
+  </footer>
+</body>
+</html>
